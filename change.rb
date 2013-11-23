@@ -8,33 +8,44 @@ change = amount_tendered - amount_due
 puts "==============================="
 puts "Total Change Due: $#{"%.2f"%change}"
 
-change = change.divmod 1
 
-
-
-if change[0] >= 1
- puts "Dollars Due: #{change[0]}"
+if change >= 1.00
+  change_split = change.divmod 1
+  dollars_due = change_split[0]
+  puts "Dollars Due: #{dollars_due}"
+  change = change_split[1]
 end
 
-if change[1] / 0.25 >= 1
-  cents_left = change[1] / 0.25
-  quarters = cents_left.divmod 1
-  puts "Quarters Due: #{quarters[0]}"
-  change = change[1]
-  amount_remaining = change - (quarters[0].to_f * 0.25)
+if change >= 0.25 
+  change_divided = change/0.25
+  change_split = change_divided.divmod 1
+  quarter_due = change_split[0]
+  change = change - (0.25 * quarter_due)
+  puts "Quarters Due: #{quarter_due}"
 end
 
-if amount_remaining != nil 
-  cents_left = amount_remaining/0.05
-  nickles = cents_left.divmod 1
-  puts "Nickles Due: #{nickles[0]}"
-  amount_remaining = amount_remaining - (nickles[0] * 0.05)
+if change >= 0.10 && change < 0.25
+  change_divided = change/0.10
+  change_split = change_divided.divmod 1
+  dimes_due = change_split[0]
+  change = change - (0.10 * dimes_due)
+  puts "Dimes Due: #{dimes_due}"
+  change = change.round(3)
 end
 
-if amount_remaining != nil
-  cents_left = amount_remaining/0.01
-  pennies = cents_left.divmod 1
-  puts "Pennies Due: #{pennies[0]}"
+if change >= 0.05 && change < 0.10
+  change_divided = change/0.05
+  change_split = change_divided.divmod 1
+  nickles_due = change_split[0]
+  change = change - (0.05 *nickles_due)
+  puts "Nickles Due: #{nickles_due}"
+  change = change.round(3)
 end
 
+if change >= 0.01 && change < 0.05
+  change_divided = change/0.01
+  change_split = change_divided.divmod 1
+  pennies_due = change_split[0]
+  puts "Pennies Due: #{pennies_due}"
+end
 
