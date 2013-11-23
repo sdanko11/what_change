@@ -5,6 +5,9 @@ puts 'What is the amount tendered?'
 amount_tendered = gets.chomp.to_f
 
 change = amount_tendered - amount_due
+change = change.round(3)
+
+
 puts "==============================="
 puts "Total Change Due: $#{"%.2f"%change}"
 
